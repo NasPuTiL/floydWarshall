@@ -1,0 +1,5 @@
+backend\.idea
+backend\.mvn
+backend\target
+
+\frontend\node_modules
