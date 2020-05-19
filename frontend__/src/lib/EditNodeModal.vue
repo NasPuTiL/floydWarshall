@@ -2,9 +2,7 @@
   <VModal :isActive="isActive" @clickModal="cancel">
     <transition name="item">
       <div class="form" v-if="isActive">
-        <h2>Edit link</h2>
-        <label>Value:</label>
-        <VInput v-model="newLink.value" placeholder="value" /><br />
+        <VInput v-model="newNode.content.text" placeholder="name" /><br />
         <VButton @click="ok">OK</VButton>
         <VButton class="danger" @click="cancel">Cancel</VButton>
       </div>
@@ -15,42 +13,43 @@
 export default {
   props: {
     isActive: Boolean,
-    link: {
+    node: {
       type: Object,
       default() {
         return {
-          id: "0", 
-          value: "0",    
+          id: "",
+          shape: "ellipse",
+          width: 60,
+          height: 60,
+          stroke: "",
+          strokeWeight: 0,
           content: {
-            value: '0',                 
-            color: "#000000",
-            shape: "straight",
-            pattern: "solid",
-            arrow: "dest"
+            text: "none",
+            url: "",
+            color: "#fab1a0"
           }
         };
       }
     }
   },
-  computed: {
-    newLink: {
-      get() {
-        return this.link.content;
-      }
+  watch: {
+    node() {
+      this.newWidth = parseInt(this.node.width);
+      this.newHeight = parseInt(this.node.Height);
     }
+  },
+  data() {
+    return {
+      newNode: this.node
+    };
   },
   methods: {
     ok() {
-      this.$emit("ok", {
-      id: this.link.id,
-        content: {
-          color: '#000000',
-          shape: 'straight',
-          pattern: 'solid',
-          arrow: 'dest',
-          value: this.link.content.value,
-        }      
-      });
+      this.newNode.shape = 'ellipse';
+      this.newNode.width = 60;
+      this.newNode.height = 60;
+      this.newNode.content.color = '#fab1a0';
+      this.$emit("ok", this.newNode);
     },
     cancel() {
       this.$emit("cancel");
@@ -60,6 +59,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 input {
+  width: 95%;
+  margin-bottom: 5px;
+}
+select {
   margin-bottom: 5px;
 }
 .item-enter-active {
@@ -71,8 +74,5 @@ input {
 .item-enter,
 .item-leave-to {
   opacity: 0;
-}
-select {
-  margin-bottom: 5px;
 }
 </style>

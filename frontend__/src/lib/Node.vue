@@ -89,7 +89,7 @@
   </g>
 </template>
 <script>
-import mouseLocation from "../utilities/mouseLocation";
+import mouseLocation from "../mouseLocation";
 export default {
   mixins: [mouseLocation],
   props: {

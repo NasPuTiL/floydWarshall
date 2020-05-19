@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     ok() {
+      console.log('XD: ' + this.link.content.value),    
       this.$emit("ok", {
       id: this.link.id,
         content: {
